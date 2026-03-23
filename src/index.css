@@ -44,17 +44,17 @@ html, body { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* Neon Glitter Glowing Effect */
 .neon-glitter {
-  color: #7DCD85;
+  color: #FF1493;
   text-shadow: 
-    0 0 7px rgba(125, 205, 133, 0.3),
-    0 0 10px rgba(125, 205, 133, 0.3),
-    0 0 21px rgba(125, 205, 133, 0.3);
+    0 0 7px rgba(255, 20, 147, 0.3),
+    0 0 10px rgba(255, 20, 147, 0.3),
+    0 0 21px rgba(255, 20, 147, 0.3);
   background: linear-gradient(
     to right, 
-    #7DCD85 20%, 
-    #BAC7BE 40%, 
-    #C2E1C2 60%, 
-    #7DCD85 80%
+    #FF1493 20%, 
+    #FF69B4 40%, 
+    #FFB6C1 60%, 
+    #FF1493 80%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -72,9 +72,9 @@ html, body { -ms-overflow-style: none; scrollbar-width: none; }
 
 @keyframes neon-pulse {
   from {
-    filter: drop-shadow(0 0 2px #7DCD85) brightness(1);
+    filter: drop-shadow(0 0 2px #FF1493) brightness(1);
   }
   to {
-    filter: drop-shadow(0 0 8px #7DCD85) brightness(1.2);
+    filter: drop-shadow(0 0 8px #FF1493) brightness(1.2);
   }
 }
