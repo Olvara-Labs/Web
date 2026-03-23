@@ -37,3 +37,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--color-border);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); /* Soft premium shadow */
 }
+
+/* Hide Scrollbars Global */
+html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+html, body { -ms-overflow-style: none; scrollbar-width: none; }

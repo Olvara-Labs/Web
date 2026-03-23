@@ -5,9 +5,14 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import About from './pages/About';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const NavContext = createContext({
   activePath: '#home',
-  navigate: (_path: string, _x: number, _y: number) => {}
+  navigate: (path: string, x: number, y: number) => {
+    void path;
+    void x;
+    void y;
+  }
 });
 
 const App: React.FC = () => {
