@@ -69,25 +69,49 @@ const App: React.FC = () => {
         {/* Transition Layer: Next page animating in over the top */}
         <AnimatePresence>
           {nextPath && (
-            <motion.div
-              key={nextPath}
-              className="absolute inset-0 z-10 w-full min-h-screen"
-              // Duplicate the global gradient here to visually block the base layer
-              style={{ background: 'radial-gradient(circle at center, #e8f2cc 0%, #cce080 100%)', backgroundAttachment: 'fixed' }}
-              initial={{ 
-                clipPath: `circle(0px at ${clickOrigin.x}px ${clickOrigin.y}px)` 
-              }}
-              animate={{ 
-                clipPath: `circle(2500px at ${clickOrigin.x}px ${clickOrigin.y}px)` 
-              }}
-              transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }} 
-              onAnimationComplete={() => {
-                setCurrentPath(nextPath);
-                setNextPath(null);
-              }}
-            >
-              {getPageComponent(nextPath)}
-            </motion.div>
+            <>
+              {/* Expanding Green Ring (the "border" effect) */}
+              <motion.div
+                className="fixed z-20 pointer-events-none rounded-full"
+                style={{
+                  border: '2px solid #3B823E',
+                  boxShadow: '0 0 30px rgba(59, 130, 62, 0.4), inset 0 0 15px rgba(59, 130, 62, 0.2)',
+                  x: '-50%', // Centers the div on the coordinate
+                  y: '-50%'
+                }}
+                initial={{ 
+                  left: clickOrigin.x,
+                  top: clickOrigin.y,
+                  width: 0, 
+                  height: 0 
+                }}
+                animate={{ 
+                  width: 5000, 
+                  height: 5000 
+                }}
+                transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+              />
+
+              <motion.div
+                key={nextPath}
+                className="absolute inset-0 z-10 w-full min-h-screen"
+                // Duplicate the global gradient here to visually block the base layer
+                style={{ background: 'radial-gradient(circle at center, #e8f2cc 0%, #cce080 100%)', backgroundAttachment: 'fixed' }}
+                initial={{ 
+                  clipPath: `circle(0px at ${clickOrigin.x}px ${clickOrigin.y}px)` 
+                }}
+                animate={{ 
+                  clipPath: `circle(2500px at ${clickOrigin.x}px ${clickOrigin.y}px)` 
+                }}
+                transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }} 
+                onAnimationComplete={() => {
+                  setCurrentPath(nextPath);
+                  setNextPath(null);
+                }}
+              >
+                {getPageComponent(nextPath)}
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </div>
