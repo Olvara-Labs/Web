@@ -25,7 +25,7 @@ const FloatingLeaves: React.FC = () => {
 
       {/* Right Botanical Element */}
       <motion.div
-        className="absolute top-[30vh] md:top-[35vh] right-[-15vw] md:right-[-5vw] translate-x-[10%] w-[750px] md:w-[1000px] opacity-95 z-10"
+        className="absolute top-[30vh] md:top-[35vh] right-[-25vw] md:right-[-15vw] translate-x-[25%] w-[750px] md:w-[1000px] opacity-95 z-10"
         style={{ y: y2 }}
       >
         <div className="relative w-full h-full flex flex-col items-center">
