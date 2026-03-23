@@ -7,7 +7,7 @@ import About from './pages/About';
 
 export const NavContext = createContext({
   activePath: '#home',
-  navigate: (path: string, x: number, y: number) => {}
+  navigate: (_path: string, _x: number, _y: number) => {}
 });
 
 const App: React.FC = () => {
