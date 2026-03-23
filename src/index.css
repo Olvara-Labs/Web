@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --color-olvara-1: #BAC7BE;
+  --color-olvara-2: #C2E1C2;
+  --color-olvara-3: #7DCD85;
+  --color-olvara-4: #80AB82;
+  --color-olvara-5: #778472;
+
+  --color-background: #edffbf; /* Ultra premium light green accent background specified by user */
+  --color-card: rgba(255, 255, 255, 0.4);
+  --color-border: rgba(255, 255, 255, 0.6);
+
+  --font-sans: "Manrope", sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at center, #e8f2cc 0%, #cce080 100%);
+  background-attachment: fixed;
+  color: #1a231b; /* High contrast dark green/black for ultra premium readability */
+  font-family: var(--font-sans);
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+}
+
+/* Custom Utilities for Premium Light Glassmorphism */
+@utility glass {
+  background: var(--color-card);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); /* Soft premium shadow */
+}
