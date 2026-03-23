@@ -18,7 +18,7 @@ const Hero: React.FC = () => {
         >
           <h1 className="font-sans font-extrabold text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.05] text-[#1a231b] max-w-5xl tracking-tight">
             Stick around, we're building<br/>
-            something <span className="text-[var(--color-olvara-4)]">epic.</span>
+            something <span className="neon-glitter">epic.</span>
           </h1>
           
           <motion.p

@@ -41,3 +41,40 @@ h1, h2, h3, h4, h5, h6 {
 /* Hide Scrollbars Global */
 html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
 html, body { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Neon Glitter Glowing Effect */
+.neon-glitter {
+  color: #7DCD85;
+  text-shadow: 
+    0 0 7px rgba(125, 205, 133, 0.3),
+    0 0 10px rgba(125, 205, 133, 0.3),
+    0 0 21px rgba(125, 205, 133, 0.3);
+  background: linear-gradient(
+    to right, 
+    #7DCD85 20%, 
+    #BAC7BE 40%, 
+    #C2E1C2 60%, 
+    #7DCD85 80%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite, neon-pulse 2s ease-in-out infinite alternate;
+  display: inline-block;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes neon-pulse {
+  from {
+    filter: drop-shadow(0 0 2px #7DCD85) brightness(1);
+  }
+  to {
+    filter: drop-shadow(0 0 8px #7DCD85) brightness(1.2);
+  }
+}
