@@ -1,7 +1,4 @@
-import React, { useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { Text3D, Center, Environment } from '@react-three/drei';
-import { useInView } from 'framer-motion';
+import React from 'react';
 import Footer from '../components/Footer';
 
 // --- Data ---
@@ -11,41 +8,7 @@ const TIMELINE_ITEMS = [
   { year: '2026', title: 'Platinum Standard', desc: 'Pioneering resilient, high-fidelity security frameworks.' },
 ] as const;
 
-const FONT_URL = 'https://threejs.org/examples/fonts/helvetiker_bold.typeface.json';
 
-// --- 3D Text Subcomponent ---
-interface Logo3DTextProps {
-  text: string;
-  color: string;
-  metalness: number;
-  roughness: number;
-  envMapIntensity: number;
-  position: [number, number, number];
-}
-
-const Logo3DText: React.FC<Logo3DTextProps> = ({ text, color, metalness, roughness, envMapIntensity, position }) => (
-  <Center position={position}>
-    <Text3D
-      font={FONT_URL}
-      size={2.2}
-      height={0.4}
-      curveSegments={4}
-      bevelEnabled
-      bevelThickness={0.15}
-      bevelSize={0.08}
-      bevelOffset={0}
-      bevelSegments={2}
-    >
-      {text}
-      <meshStandardMaterial
-        color={color}
-        metalness={metalness}
-        roughness={roughness}
-        envMapIntensity={envMapIntensity}
-      />
-    </Text3D>
-  </Center>
-);
 
 // --- Timeline Item Subcomponent ---
 interface TimelineItemProps {
@@ -79,9 +42,6 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ year, title, desc, index })
 
 // --- About Page ---
 const About: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: false, margin: "1000px 0px" });
-
   return (
     <div className="relative w-full min-h-screen bg-transparent">
       {/* Content Layer */}
