@@ -1,42 +1,45 @@
 import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
 
 const FloatingLeaves: React.FC = () => {
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 1000], [0, 200]);
-  const y2 = useTransform(scrollY, [0, 1000], [0, -150]);
-
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-10 block">
-      {/* Left Botanical Element */}
-      <motion.div
-        className="absolute top-[-5vh] left-[-30vw] md:left-[-15vw] w-[800px] md:w-[1200px] opacity-95 flex flex-col items-center z-10"
-        style={{ y: y1 }}
-      >
-        <div className="relative w-full h-full flex flex-col items-center">
-          <img 
-            src="/nano-banana-leaf-transparet.png" 
-            alt="Transparent Photorealistic Banana Leaf Left" 
-            className="w-full h-auto object-contain mix-blend-multiply"
-            style={{ transform: 'scaleX(-1) rotate(15deg)' }}
-          />
-        </div>
-      </motion.div>
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
 
-      {/* Right Botanical Element */}
-      <motion.div
-        className="absolute top-[30vh] md:top-[35vh] right-[-25vw] md:right-[-15vw] translate-x-[25%] w-[750px] md:w-[1000px] opacity-95 z-10"
-        style={{ y: y2 }}
+      {/* Left Botanical Element
+          The image has its leaf content on the RIGHT portion of a wide canvas.
+          We anchor to left:0 and shift the whole canvas left by ~55% so the
+          leaf is half-visible on the left screen edge. No scaleX flip needed. */}
+      <div
+        className="absolute left-0 top-[55vh] md:top-[5vh]"
+        style={{
+          width: 'min(130vw, 920px)',
+          transform: 'translateX(-65%)',
+        }}
       >
-        <div className="relative w-full h-full flex flex-col items-center">
-          <img 
-            src="/user-right-leaf.png" 
-            alt="User Provided Leaf Right" 
-            className="w-full h-auto object-contain mix-blend-multiply"
-            style={{ transform: 'rotate(-12deg)' }}
-          />
-        </div>
-      </motion.div>
+        <img
+          src="/nano-banana-leaf-transparet.png"
+          alt="Botanical leaf left"
+          className="w-full h-auto object-contain mix-blend-multiply"
+          style={{ transform: 'rotate(15deg)' }}
+        />
+      </div>
+
+      {/* Right Botanical Element
+          Stem is on the right side of the image naturally.
+          Anchor to right:0, push 40% of width off the right edge. */}
+      <div
+        className="absolute right-0 top-[68vh] md:top-[35vh]"
+        style={{
+          width: 'min(120vw, 850px)',
+          transform: 'translateX(40%)',
+        }}
+      >
+        <img
+          src="/user-right-leaf.png"
+          alt="Botanical leaf right"
+          className="w-full h-auto object-contain mix-blend-multiply"
+          style={{ transform: 'rotate(-12deg)' }}
+        />
+      </div>
     </div>
   );
 };

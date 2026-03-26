@@ -7,7 +7,7 @@ const Products = lazy(() => import('./pages/Products'));
 const About = lazy(() => import('./pages/About'));
 
 // --- Shared Constants ---
-export const TRANSITION_DURATION = 1.0;
+export const TRANSITION_DURATION = 1.2;
 export const TRANSITION_EASE: [number, number, number, number] = [0.76, 0, 0.24, 1];
 export const COLORS = {
   primary: '#3B823E',
@@ -26,22 +26,22 @@ interface NavContextType {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const NavContext = createContext<NavContextType>({
-  activePath: '#home',
+  activePath: '/',
   navigate: () => {},
 });
 
 // --- App ---
 const App: React.FC = () => {
-  const [currentPath, setCurrentPath] = useState(window.location.hash || '#home');
+  const [currentPath, setCurrentPath] = useState(window.location.pathname || '/');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [clickOrigin, setClickOrigin] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const handleHashChange = () => {
-      setCurrentPath(window.location.hash || '#home');
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname || '/');
     };
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   const navigate = useCallback((path: string, x: number, y: number) => {
@@ -59,9 +59,8 @@ const App: React.FC = () => {
 
   const pageContent = useMemo(() => {
     switch (currentPath) {
-      case '#products': return <Products />;
-      case '#about': return <About />;
-      case '#home':
+      case '/products': return <Products />;
+      case '/about': return <About />;
       default: return <Home />;
     }
   }, [currentPath]);
