@@ -1,13 +1,13 @@
 import React from 'react';
+import Footer from '../components/Footer';
 import Hero from '../components/Hero';
-import FloatingLeaves from '../components/FloatingLeaves';
 
 const Home: React.FC = () => {
   return (
-    <>
-      <FloatingLeaves />
+    <div className="relative">
       <Hero />
-    </>
+      <Footer />
+    </div>
   );
 };
 

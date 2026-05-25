@@ -1,137 +1,72 @@
-import React, { useState, useEffect, createContext, lazy, Suspense, useMemo, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { lazy, startTransition, Suspense, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
+import { NavContext, normalizePath, TRANSITION_DURATION, TRANSITION_EASE } from './app-shell';
+import type { AppPath } from './app-shell';
 
 const Products = lazy(() => import('./pages/Products'));
 const About = lazy(() => import('./pages/About'));
 
-// --- Shared Constants ---
-export const TRANSITION_DURATION = 1.2;
-export const TRANSITION_EASE: [number, number, number, number] = [0.76, 0, 0.24, 1];
-export const COLORS = {
-  primary: '#3B823E',
-  primaryDark: '#2C5E2E',
-  text: '#1a231b',
-  textMuted: '#2c3e2e',
-  gradientStart: '#e8f2cc',
-  gradientEnd: '#cce080',
-} as const;
+const ROUTES: Record<AppPath, React.ReactNode> = {
+  '/': <Home />,
+  '/products': <Products />,
+  '/about': <About />,
+};
 
-// --- Navigation Context ---
-interface NavContextType {
-  activePath: string;
-  navigate: (path: string, x: number, y: number) => void;
-}
-
-// eslint-disable-next-line react-refresh/only-export-components
-export const NavContext = createContext<NavContextType>({
-  activePath: '/',
-  navigate: () => {},
-});
-
-// --- App ---
 const App: React.FC = () => {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname || '/');
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [clickOrigin, setClickOrigin] = useState({ x: 0, y: 0 });
+  const [currentPath, setCurrentPath] = useState<AppPath>(() => normalizePath(window.location.pathname));
 
   useEffect(() => {
     const handlePopState = () => {
-      setCurrentPath(window.location.pathname || '/');
+      startTransition(() => {
+        setCurrentPath(normalizePath(window.location.pathname));
+      });
     };
+
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const navigate = useCallback((path: string, x: number, y: number) => {
-    if (path === currentPath) return;
-    setClickOrigin({ x, y });
-    setCurrentPath(path);
-    setIsTransitioning(true);
-    window.history.pushState(null, '', path);
-  }, [currentPath]);
-
-  const navContextValue = useMemo(() => ({
-    activePath: currentPath,
-    navigate,
-  }), [currentPath, navigate]);
-
-  const pageContent = useMemo(() => {
-    switch (currentPath) {
-      case '/products': return <Products />;
-      case '/about': return <About />;
-      default: return <Home />;
+  useEffect(() => {
+    if (normalizePath(window.location.pathname) !== currentPath) {
+      window.history.replaceState(null, '', currentPath);
     }
+
+    window.scrollTo(0, 0);
   }, [currentPath]);
+
+  const navigate = (path: AppPath) => {
+    if (path === currentPath) return;
+
+    window.history.pushState(null, '', path);
+    startTransition(() => setCurrentPath(path));
+  };
 
   return (
-    <NavContext.Provider value={navContextValue}>
-      <div className="relative min-h-screen text-[#1a231b] overflow-x-hidden selection:bg-[#3B823E] selection:text-[var(--color-background)]">
-        
-        {/* Navbar sits on top layer */}
-        <div className="relative z-50">
+    <NavContext.Provider value={{ activePath: currentPath, navigate }}>
+      <div className="relative min-h-screen overflow-x-hidden text-[color:var(--color-text)] selection:bg-[color:var(--color-primary)] selection:text-white">
+        <div className="site-backdrop" aria-hidden="true">
+          <div className="site-backdrop__grid" />
+          <div className="site-backdrop__glow site-backdrop__glow--one" />
+          <div className="site-backdrop__glow site-backdrop__glow--two" />
+        </div>
+
+        <div className="relative z-30">
           <Navbar />
         </div>
-        
-        {/* Expanding Green Ring */}
-        <AnimatePresence>
-          {isTransitioning && (
-            <motion.div
-              className="fixed z-20 pointer-events-none rounded-full"
-              style={{
-                border: `2px solid ${COLORS.primary}`,
-                boxShadow: `0 0 30px rgba(59, 130, 62, 0.4), inset 0 0 15px rgba(59, 130, 62, 0.2)`,
-                x: '-50%',
-                y: '-50%'
-              }}
-              initial={{ 
-                left: clickOrigin.x,
-                top: clickOrigin.y,
-                width: 0, 
-                height: 0 
-              }}
-              animate={{ 
-                width: 5000, 
-                height: 5000 
-              }}
-              exit={{ opacity: 0, transition: { duration: 0.2 } }}
-              transition={{ duration: TRANSITION_DURATION, ease: TRANSITION_EASE }}
-            />
-          )}
-        </AnimatePresence>
-        
-        {/* Page Transition Layer */}
-        <AnimatePresence initial={false} mode="sync">
-          <motion.div
-            key={currentPath}
-            className="absolute inset-0 w-full min-h-screen"
-            style={{ 
-              background: `radial-gradient(circle at center, ${COLORS.gradientStart} 0%, ${COLORS.gradientEnd} 100%)`, 
-              backgroundAttachment: 'fixed' 
-            }}
-            initial={{ 
-              zIndex: 10,
-              clipPath: `circle(0px at ${clickOrigin.x}px ${clickOrigin.y}px)` 
-            }}
-            animate={{ 
-              zIndex: 10,
-              clipPath: `circle(2500px at ${clickOrigin.x}px ${clickOrigin.y}px)` 
-            }}
-            exit={{ 
-              zIndex: 0,
-              clipPath: `circle(2500px at ${clickOrigin.x}px ${clickOrigin.y}px)`
-            }}
-            transition={{ duration: TRANSITION_DURATION, ease: TRANSITION_EASE }} 
-            onAnimationComplete={() => {
-              setIsTransitioning(false);
-            }}
-          >
-            <Suspense fallback={null}>
-              {pageContent}
-            </Suspense>
-          </motion.div>
-        </AnimatePresence>
+
+        <motion.div
+          key={currentPath}
+          className="relative z-10 min-h-screen"
+          initial={{ opacity: 0.985 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: TRANSITION_DURATION * 0.55, ease: TRANSITION_EASE }}
+        >
+          <Suspense fallback={<div className="min-h-screen" />}>
+            {ROUTES[currentPath]}
+          </Suspense>
+        </motion.div>
       </div>
     </NavContext.Provider>
   );
