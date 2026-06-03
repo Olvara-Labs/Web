@@ -1,2 +1,4 @@
-# Empty .vercelignore overrides .gitignore for Vercel deployments, forcing it to upload the dist folder.
-node_modules
+# Override .gitignore so Vercel includes the dist folder during deployment trace
+!dist
+!dist/
+!dist/**/*
