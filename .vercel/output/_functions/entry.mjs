@@ -1,1 +1,1 @@
-export { B as default } from './chunks/entrypoint_B8VxDBKX.mjs';
+export { q as default } from './chunks/entrypoint_qei5UJpA.mjs';
