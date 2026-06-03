@@ -2,7 +2,6 @@
   "name": "olvara-labs-web",
   "private": true,
   "version": "0.1.0",
-  "packageManager": "bun@1.3.14",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
