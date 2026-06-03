@@ -3,10 +3,12 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 
-// The RESEND_API_KEY must be set in your Vercel Environment Variables
-const resend = new Resend(import.meta.env.RESEND_API_KEY);
-
 export const POST: APIRoute = async ({ request }) => {
+  // Initialize Resend inside the request handler to ensure env vars are loaded.
+  // We check both process.env (Vercel Node.js standard) and import.meta.env (Astro Dev Server).
+  const apiKey = (typeof process !== 'undefined' ? process.env.RESEND_API_KEY : undefined) || import.meta.env.RESEND_API_KEY;
+  const resend = new Resend(apiKey);
+
   try {
     const data = await request.json();
     const { name, email, subject, message } = data;
@@ -23,7 +25,7 @@ export const POST: APIRoute = async ({ request }) => {
       // Resend provides a testing domain (onboarding@resend.dev) out of the box,
       // but to send to addresses other than your verified domain in production,
       // you will need to add a domain to Resend.
-      from: 'Olvara Contact Form <onboarding@resend.dev>',
+      from: 'Olvara Contact Form <olvaralabs@proton.me>',
       to: ['yaseenzaman1312@proton.me'],
       subject: `New Contact Request: ${subject || 'No Subject'}`,
       html: `
