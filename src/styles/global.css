@@ -59,14 +59,22 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
   background:
     radial-gradient(circle at top, rgba(255,255,255,0.95), transparent 42%),
     radial-gradient(circle at 20% 20%, rgba(137,211,164,0.18), transparent 30%),
     radial-gradient(circle at 80% 12%, rgba(29,124,73,0.1), transparent 28%),
     linear-gradient(#f7faf5 0%, #edf5ed 45%, #e3f0e4 100%);
-  background-attachment: fixed;
-  overflow-x: hidden;
 }
+
 
 a {
   color: inherit;
@@ -146,6 +154,8 @@ ol, ul, menu { list-style: none; }
   border-radius: var(--radius-pill);
   filter: blur(56px);
   opacity: 0.5;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .site-backdrop__glow--one {
@@ -448,19 +458,7 @@ ol, ul, menu { list-style: none; }
 @media (max-width: 768px) {
   .hero__bg-left,
   .hero__bg-right {
-    opacity: 0.35; /* Subtle blend on mobile/tablets to prevent text overlap */
-  }
-
-  .hero__bg-left {
-    width: 27vw;
-    left: -4vw;
-    bottom: -1.5vw;
-  }
-
-  .hero__bg-right {
-    width: 38vw;
-    right: -2vw;
-    bottom: -1.5vw;
+    display: none;
   }
 }
 
@@ -1010,7 +1008,7 @@ main:has(.hero) + .site-footer {
 
 @media (max-width: 480px) {
   .footer__links-area {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .hero__actions {
