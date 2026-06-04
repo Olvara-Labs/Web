@@ -314,9 +314,9 @@ ol, ul, menu { list-style: none; }
   position: absolute;
   top: 0;
   left: -100%;
-  width: 15px;
+  width: 50%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.4);
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
   transform: skewX(-20deg);
 }
 
@@ -326,7 +326,7 @@ ol, ul, menu { list-style: none; }
 }
 
 .navbar__cta:hover::before {
-  animation: buttonShimmer 0.4s linear infinite;
+  animation: buttonShimmer 0.8s linear infinite;
 }
 
 @keyframes buttonShimmer {
