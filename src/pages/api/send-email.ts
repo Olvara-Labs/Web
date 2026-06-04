@@ -4,9 +4,18 @@ import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { z } from 'zod';
 
+const blockedDomains = ['example.com', 'test.com', 'spam.com', 'fake.com', 'tempmail.com', 'mailinator.com'];
+const blockedNames = ['robot', 'hacker', 'bot', 'test', 'spam', 'script', 'fuck', 'shit', 'bitch', 'cunt', 'asshole', 'dick', 'pussy'];
+
 const contactSchema = z.object({
-  name: z.string().min(1, "Name is required").max(100, "Name is too long"),
-  email: z.string().email("Invalid email address").max(100, "Email is too long"),
+  name: z.string().min(1, "Name is required").max(100, "Name is too long").refine((val) => {
+    const lower = val.toLowerCase();
+    return !blockedNames.some(blocked => lower.includes(blocked));
+  }, "Please provide a valid name."),
+  email: z.string().email("Invalid email address").max(100, "Email is too long").refine((val) => {
+    const domain = val.split('@')[1]?.toLowerCase();
+    return domain && !blockedDomains.includes(domain);
+  }, "Please use a valid email address. Dummy domains are not permitted."),
   subject: z.string().max(150, "Subject is too long").optional(),
   message: z.string().min(1, "Message is required").max(2000, "Message is too long"),
 });
