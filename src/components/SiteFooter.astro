@@ -7,22 +7,25 @@ const { noMargin = false } = Astro.props;
 <footer class={`site-footer ${noMargin ? 'site-footer--no-margin' : ''}`}>
   <div class="page-shell">
     <div class="footer__inner">
-      <!-- Brand column (1 part) – logo peeking from edge -->
       <div class="footer__brand">
-        <img
-          src="/logo.webp"
-          alt=""
-          class="footer__logo"
-          width="96"
-          height="96"
-          loading="lazy"
-        />
-        <p class="footer__brand-text">Canopryx</p>
+        <div class="footer__brand-mark">
+          <img
+            src="/logo.webp"
+            alt=""
+            class="footer__logo"
+            width="96"
+            height="96"
+            loading="lazy"
+          />
+          <div>
+            <p class="footer__brand-kicker">Canopryx</p>
+            <p class="footer__brand-text">On-premises security infrastructure for high-trust teams.</p>
+          </div>
+        </div>
+        <p class="footer__brand-note">Designed for organizations that would rather own the blast radius than outsource it.</p>
       </div>
 
-      <!-- Links area (3 parts) -->
       <div class="footer__links-area">
-
         <div>
           <h3 class="footer__col-title">Company</h3>
           <a class="footer__link" href="/about">About</a>
@@ -36,7 +39,6 @@ const { noMargin = false } = Astro.props;
         </div>
       </div>
 
-      <!-- CTA area (2 parts) -->
       <div class="footer__cta-area">
         <p class="footer__cta-label">Ready to secure<br>your&nbsp;operations?</p>
         <a class="footer__cta-btn" href="/contact" id="footer-contact-btn">
@@ -47,6 +49,10 @@ const { noMargin = false } = Astro.props;
         </a>
 
       </div>
+    </div>
+
+    <div class="footer__wordmark-wrap" aria-hidden="true">
+      <p class="footer__wordmark">Canopryx</p>
     </div>
 
     <div class="footer__bottom">
