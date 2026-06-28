@@ -39,6 +39,80 @@ function escapeHtml(value: string) {
     .replace(/'/g, "&#039;");
 }
 
+function renderContactEmail({
+  name,
+  email,
+  subject,
+  message,
+}: {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}) {
+  return `
+    <div style="margin:0;padding:32px 18px;background-color:#f7faf5;background-image:radial-gradient(circle at top left, rgba(107,198,142,0.18), transparent 28%),linear-gradient(180deg, #f7faf5 0%, #edf5ed 100%);color:#102418;">
+      <div style="max-width:720px;margin:0 auto;">
+        <div style="margin-bottom:16px;">
+          <div style="display:inline-block;padding:8px 14px;border-radius:999px;background:#e7f6ec;border:1px solid rgba(29,124,73,0.14);font:700 11px/1 'Outfit','Plus Jakarta Sans',Arial,sans-serif;letter-spacing:0.18em;text-transform:uppercase;color:#1d7c49;">
+            Canopryx Contact Form
+          </div>
+        </div>
+
+        <div style="background:#ffffff;border:1px solid rgba(16,36,24,0.08);border-radius:28px;box-shadow:0 14px 36px rgba(18,48,31,0.08);overflow:hidden;">
+          <div style="padding:28px 28px 22px;background:linear-gradient(135deg, #102418 0%, #105233 62%, #1d7c49 100%);">
+            <div style="font:700 14px/1.2 'Outfit','Plus Jakarta Sans',Arial,sans-serif;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.72);margin-bottom:12px;">
+              New Inquiry
+            </div>
+            <h1 style="margin:0;font:700 32px/1.1 'Outfit','Plus Jakarta Sans',Arial,sans-serif;color:#ffffff;">
+              New contact form submission
+            </h1>
+            <p style="margin:12px 0 0;font:500 15px/1.7 'Plus Jakarta Sans',Arial,sans-serif;color:rgba(255,255,255,0.82);">
+              A visitor submitted the website contact form. Details are below.
+            </p>
+          </div>
+
+          <div style="padding:28px;">
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:0 0 24px;">
+              <tr>
+                <td style="width:33.33%;padding:0 12px 12px 0;vertical-align:top;">
+                  <div style="padding:16px 18px;background:#f7faf5;border:1px solid rgba(16,36,24,0.08);border-radius:18px;">
+                    <div style="font:700 11px/1 'Outfit','Plus Jakarta Sans',Arial,sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#365243;margin-bottom:10px;">Name</div>
+                    <div style="font:600 16px/1.5 'Plus Jakarta Sans',Arial,sans-serif;color:#102418;">${name}</div>
+                  </div>
+                </td>
+                <td style="width:33.33%;padding:0 12px 12px 0;vertical-align:top;">
+                  <div style="padding:16px 18px;background:#f7faf5;border:1px solid rgba(16,36,24,0.08);border-radius:18px;">
+                    <div style="font:700 11px/1 'Outfit','Plus Jakarta Sans',Arial,sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#365243;margin-bottom:10px;">Email</div>
+                    <div style="font:600 16px/1.5 'Plus Jakarta Sans',Arial,sans-serif;color:#102418;word-break:break-word;">
+                      <a href="mailto:${email}" style="color:#1d7c49;text-decoration:none;">${email}</a>
+                    </div>
+                  </div>
+                </td>
+                <td style="width:33.33%;padding:0 0 12px;vertical-align:top;">
+                  <div style="padding:16px 18px;background:#f7faf5;border:1px solid rgba(16,36,24,0.08);border-radius:18px;">
+                    <div style="font:700 11px/1 'Outfit','Plus Jakarta Sans',Arial,sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#365243;margin-bottom:10px;">Subject</div>
+                    <div style="font:600 16px/1.5 'Plus Jakarta Sans',Arial,sans-serif;color:#102418;">${subject}</div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+
+            <div style="padding:22px 22px 24px;background:linear-gradient(180deg, rgba(247,250,245,0.94) 0%, rgba(237,245,237,0.94) 100%);border:1px solid rgba(16,36,24,0.08);border-radius:22px;">
+              <div style="font:700 11px/1 'Outfit','Plus Jakarta Sans',Arial,sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#365243;margin-bottom:14px;">Message</div>
+              <div style="font:500 16px/1.8 'Plus Jakarta Sans',Arial,sans-serif;color:#102418;white-space:pre-wrap;">${message}</div>
+            </div>
+
+            <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(16,36,24,0.08);font:500 13px/1.7 'Plus Jakarta Sans',Arial,sans-serif;color:#365243;">
+              Reply directly to this email to continue the conversation with the sender.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 export const POST: APIRoute = async ({ request }) => {
   const apiKey = (typeof process !== 'undefined' ? process.env.RESEND_API_KEY : undefined) || import.meta.env.RESEND_API_KEY;
   const contactRecipient =
@@ -93,17 +167,12 @@ export const POST: APIRoute = async ({ request }) => {
       to: [contactRecipient],
       replyTo: email,
       subject: `New Contact Request: ${subject || 'No Subject'}`,
-      html: `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2>New Contact Form Submission</h2>
-          <p><strong>Name:</strong> ${safeName}</p>
-          <p><strong>Email:</strong> ${safeEmail}</p>
-          <p><strong>Subject:</strong> ${safeSubject}</p>
-          <hr />
-          <p><strong>Message:</strong></p>
-          <p style="white-space: pre-wrap;">${safeMessage}</p>
-        </div>
-      `,
+      html: renderContactEmail({
+        name: safeName,
+        email: safeEmail,
+        subject: safeSubject,
+        message: safeMessage,
+      }),
     });
 
     if (error) {
