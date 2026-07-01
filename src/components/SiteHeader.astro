@@ -66,29 +66,44 @@ const currentPath = Astro.url.pathname;
 
 <script>
   function initNav() {
-    const toggle = document.getElementById('nav-toggle') as HTMLButtonElement | null;
+    const toggle = document.getElementById('nav-toggle');
     const mobileNav = document.getElementById('mobile-nav');
 
     if (toggle && mobileNav) {
-      const setOpen = (isOpen: boolean) => {
+      const setOpen = (isOpen) => {
+        if (mobileNav.classList.contains('is-open') === isOpen) return;
         mobileNav.classList.toggle('is-open', isOpen);
         mobileNav.setAttribute('aria-hidden', String(!isOpen));
         toggle.setAttribute('aria-expanded', String(isOpen));
-        document.body.classList.toggle('nav-open', isOpen);
       };
 
-      toggle.onclick = () => setOpen(!mobileNav.classList.contains('is-open'));
+      toggle.onclick = (e) => {
+        e.stopPropagation();
+        setOpen(!mobileNav.classList.contains('is-open'));
+      };
 
       mobileNav.querySelectorAll('a').forEach(link => {
-        (link as HTMLAnchorElement).onclick = () => setOpen(false);
+        link.onclick = () => setOpen(false);
       });
 
-      document.onkeydown = (event) => {
+      document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && mobileNav.classList.contains('is-open')) {
           setOpen(false);
           toggle.focus();
         }
-      };
+      });
+
+      document.addEventListener('click', (event) => {
+        if (mobileNav.classList.contains('is-open') && !mobileNav.contains(event.target)) {
+          setOpen(false);
+        }
+      });
+
+      window.addEventListener('scroll', () => {
+        if (mobileNav.classList.contains('is-open')) {
+          setOpen(false);
+        }
+      }, { passive: true });
     }
   }
 

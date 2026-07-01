@@ -76,34 +76,34 @@ function renderContactEmail({
 }) {
   return `<!doctype html>
   <html>
-    <body style="margin:0;background:#f2f4f3;color:#17221c;">
+    <body style="margin:0;background:#f9fafb;color:#111827;">
       <div style="padding:40px 16px;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:640px;margin:0 auto;border-collapse:collapse;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;margin:0 auto;border-collapse:collapse;">
           <tr>
-            <td style="padding:0 0 18px;font:700 13px/1 Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#1f6f55;">
-              Canopryx
+            <td style="padding:0 0 16px;font:700 13px/1 Arial,sans-serif;letter-spacing:.15em;text-transform:uppercase;color:#ca8a04;">
+              Canopryx / Contact
             </td>
           </tr>
           <tr>
-            <td style="background:#ffffff;border:1px solid #dfe5e1;border-top:4px solid #173f31;">
+            <td style="background:#ffffff;border:1px solid #e5e7eb;border-top:4px solid #eab308;border-radius:6px;overflow:hidden;">
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse;">
                 <tr>
-                  <td style="padding:30px 32px 24px;border-bottom:1px solid #e5e9e7;">
-                    <div style="margin-bottom:8px;font:700 11px/1 Arial,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:#607068;">Website inquiry</div>
-                    <h1 style="margin:0;font:600 25px/1.3 Georgia,'Times New Roman',serif;color:#17221c;">${subject}</h1>
+                  <td style="padding:32px 32px 24px;border-bottom:1px solid #f3f4f6;">
+                    <div style="margin-bottom:8px;font:700 11px/1 Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;">New Message</div>
+                    <h1 style="margin:0;font:600 22px/1.3 Arial,sans-serif;color:#111827;">${subject}</h1>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:0 32px;">
                     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse;">
                       <tr>
-                        <td style="width:92px;padding:20px 16px 16px 0;border-bottom:1px solid #edf0ee;vertical-align:top;font:700 11px/1.5 Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#718078;">From</td>
-                        <td style="padding:17px 0 16px;border-bottom:1px solid #edf0ee;font:600 15px/1.6 Arial,sans-serif;color:#17221c;">${name}</td>
+                        <td style="width:100px;padding:20px 16px 20px 0;border-bottom:1px solid #f3f4f6;vertical-align:top;font:700 11px/1.5 Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#9ca3af;">From</td>
+                        <td style="padding:17px 0 20px;border-bottom:1px solid #f3f4f6;font:600 15px/1.6 Arial,sans-serif;color:#111827;">${name}</td>
                       </tr>
                       <tr>
-                        <td style="width:92px;padding:16px 16px 16px 0;border-bottom:1px solid #edf0ee;vertical-align:top;font:700 11px/1.5 Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#718078;">Email</td>
-                        <td style="padding:13px 0 16px;border-bottom:1px solid #edf0ee;font:500 15px/1.6 Arial,sans-serif;word-break:break-word;">
-                          <a href="mailto:${email}" style="color:#1f6f55;text-decoration:underline;">${email}</a>
+                        <td style="width:100px;padding:20px 16px 20px 0;border-bottom:1px solid #f3f4f6;vertical-align:top;font:700 11px/1.5 Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#9ca3af;">Email</td>
+                        <td style="padding:17px 0 20px;border-bottom:1px solid #f3f4f6;font:500 15px/1.6 Arial,sans-serif;word-break:break-word;">
+                          <a href="mailto:${email}" style="color:#ca8a04;text-decoration:none;">${email}</a>
                         </td>
                       </tr>
                     </table>
@@ -111,16 +111,16 @@ function renderContactEmail({
                 </tr>
                 <tr>
                   <td style="padding:28px 32px 34px;">
-                    <div style="margin-bottom:13px;font:700 11px/1 Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#607068;">Message</div>
-                    <div style="font:400 16px/1.75 Arial,sans-serif;color:#26342d;white-space:pre-wrap;">${message}</div>
+                    <div style="margin-bottom:12px;font:700 11px/1 Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#9ca3af;">Message</div>
+                    <div style="font:400 15px/1.75 Arial,sans-serif;color:#374151;white-space:pre-wrap;">${message}</div>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
           <tr>
-            <td style="padding:16px 2px 0;font:400 12px/1.6 Arial,sans-serif;color:#718078;">
-              Reply to this email to respond to ${name}.
+            <td style="padding:16px 2px 0;font:400 12px/1.6 Arial,sans-serif;color:#6b7280;">
+              Reply directly to this email to respond.
             </td>
           </tr>
         </table>
@@ -135,42 +135,71 @@ function renderEarlyAccessEmail({
   name: string; email: string; organization: string; role: string; industry: string;
   companySize: string; secretsSetup: string; protectionGoals: string; message: string;
 }) {
-  const detail = (label: string, value: string) => `
-    <td style="width:50%;padding:0 8px 16px;vertical-align:top;">
-      <div style="height:100%;padding:17px 18px;background:#f4f8f6;border:1px solid #e1ebe5;border-radius:14px;">
-        <div style="margin-bottom:8px;font:700 10px/1.2 Arial,sans-serif;letter-spacing:.15em;text-transform:uppercase;color:#587065;">${label}</div>
-        <div style="font:600 15px/1.5 Arial,sans-serif;color:#14261c;word-break:break-word;">${value}</div>
-      </div>
-    </td>`;
+  const detailRow = (label: string, value: string) => `
+    <tr>
+      <td style="width:140px;padding:16px 16px 16px 0;border-bottom:1px solid #f3f4f6;vertical-align:top;font:700 11px/1.5 Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#9ca3af;">${label}</td>
+      <td style="padding:14px 0 16px;border-bottom:1px solid #f3f4f6;font:500 14px/1.6 Arial,sans-serif;color:#111827;word-break:break-word;">${value}</td>
+    </tr>`;
 
   return `<!doctype html>
-  <html><body style="margin:0;background:#edf3ef;color:#14261c;">
-    <div style="padding:36px 16px;background:linear-gradient(145deg,#edf3ef 0%,#f8fbf9 52%,#e7f1ed 100%);">
-      <div style="max-width:700px;margin:0 auto;">
-        <div style="margin:0 0 14px 4px;font:700 11px/1 Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#2a6f7e;">Canopryx / Private preview</div>
-        <div style="overflow:hidden;background:#fff;border:1px solid #dde8e2;border-radius:24px;box-shadow:0 18px 45px rgba(20,38,28,.09);">
-          <div style="padding:34px;background:#13241b;background-image:linear-gradient(125deg,#13241b 0%,#174e3a 100%);">
-            <div style="font:700 11px/1 Arial,sans-serif;letter-spacing:.17em;text-transform:uppercase;color:#78c49a;">New early access request</div>
-            <h1 style="margin:12px 0 0;font:700 30px/1.15 Arial,sans-serif;color:#fff;">${organization}</h1>
-            <p style="margin:10px 0 0;font:400 15px/1.6 Arial,sans-serif;color:#c8d9cf;">${name} wants to start a conversation about Canopryx.</p>
-          </div>
-          <div style="padding:28px 24px 30px;">
-            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;table-layout:fixed;margin:0 -8px;width:calc(100% + 16px);">
-              <tr>${detail('Name', name)}${detail('Work email', `<a href="mailto:${email}" style="color:#2a6f7e;text-decoration:none;">${email}</a>`)}</tr>
-              <tr>${detail('Role / title', role)}${detail('Industry', industry)}</tr>
-              <tr>${detail('Company size', companySize)}${detail('Current setup', secretsSetup)}</tr>
-            </table>
-            <div style="margin-top:4px;padding:22px;background:#eef6f2;border-left:4px solid #2a6f7e;border-radius:4px 16px 16px 4px;">
-              <div style="margin-bottom:10px;font:700 10px/1.2 Arial,sans-serif;letter-spacing:.15em;text-transform:uppercase;color:#587065;">What they are trying to protect</div>
-              <div style="font:500 15px/1.75 Arial,sans-serif;color:#14261c;white-space:pre-wrap;">${protectionGoals}</div>
-            </div>
-            ${message ? `<div style="margin-top:16px;padding:20px 22px;border:1px solid #e1e8e4;border-radius:16px;"><div style="margin-bottom:10px;font:700 10px/1.2 Arial,sans-serif;letter-spacing:.15em;text-transform:uppercase;color:#587065;">Additional context</div><div style="font:400 15px/1.75 Arial,sans-serif;color:#33483d;white-space:pre-wrap;">${message}</div></div>` : ''}
-            <p style="margin:22px 2px 0;font:400 12px/1.6 Arial,sans-serif;color:#6a7d72;">Reply to this email to contact the applicant directly.</p>
-          </div>
-        </div>
+  <html>
+    <body style="margin:0;background:#f9fafb;color:#111827;">
+      <div style="padding:40px 16px;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;margin:0 auto;border-collapse:collapse;">
+          <tr>
+            <td style="padding:0 0 16px;font:700 13px/1 Arial,sans-serif;letter-spacing:.15em;text-transform:uppercase;color:#9333ea;">
+              Canopryx / Early Access
+            </td>
+          </tr>
+          <tr>
+            <td style="background:#ffffff;border:1px solid #e5e7eb;border-top:4px solid #a855f7;border-radius:6px;overflow:hidden;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse;">
+                <tr>
+                  <td style="padding:32px 32px 24px;border-bottom:1px solid #f3f4f6;">
+                    <div style="margin-bottom:8px;font:700 11px/1 Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;">New Request</div>
+                    <h1 style="margin:0;font:600 22px/1.3 Arial,sans-serif;color:#111827;">${organization}</h1>
+                    <p style="margin:8px 0 0;font:400 15px/1.6 Arial,sans-serif;color:#4b5563;">${name} wants to start a conversation about Canopryx.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:0 32px;">
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse;">
+                      ${detailRow('Applicant', name)}
+                      ${detailRow('Work Email', `<a href="mailto:${email}" style="color:#9333ea;text-decoration:none;">${email}</a>`)}
+                      ${detailRow('Role / Title', role)}
+                      ${detailRow('Industry', industry)}
+                      ${detailRow('Company Size', companySize)}
+                      ${detailRow('Current Setup', secretsSetup)}
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:28px 32px;">
+                    <div style="margin-bottom:12px;font:700 11px/1 Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#9ca3af;">Protection Goals</div>
+                    <div style="font:400 15px/1.75 Arial,sans-serif;color:#374151;white-space:pre-wrap;">${protectionGoals}</div>
+                  </td>
+                </tr>
+                ${message ? `
+                <tr>
+                  <td style="padding:0 32px 34px;">
+                    <div style="padding:20px;background:#f9fafb;border:1px solid #f3f4f6;border-radius:6px;">
+                      <div style="margin-bottom:10px;font:700 11px/1 Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#9ca3af;">Additional Context</div>
+                      <div style="font:400 14px/1.6 Arial,sans-serif;color:#4b5563;white-space:pre-wrap;">${message}</div>
+                    </div>
+                  </td>
+                </tr>` : ''}
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:16px 2px 0;font:400 12px/1.6 Arial,sans-serif;color:#6b7280;">
+              Reply directly to this email to contact the applicant.
+            </td>
+          </tr>
+        </table>
       </div>
-    </div>
-  </body></html>`;
+    </body>
+  </html>`;
 }
 
 export const POST: APIRoute = async ({ request }) => {
