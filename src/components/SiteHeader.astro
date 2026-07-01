@@ -70,7 +70,7 @@ const currentPath = Astro.url.pathname;
     const mobileNav = document.getElementById('mobile-nav');
 
     if (toggle && mobileNav) {
-      const setOpen = (isOpen) => {
+      const setOpen = (isOpen: boolean) => {
         if (mobileNav.classList.contains('is-open') === isOpen) return;
         mobileNav.classList.toggle('is-open', isOpen);
         mobileNav.setAttribute('aria-hidden', String(!isOpen));
@@ -83,7 +83,7 @@ const currentPath = Astro.url.pathname;
       };
 
       mobileNav.querySelectorAll('a').forEach(link => {
-        link.onclick = () => setOpen(false);
+        (link as HTMLAnchorElement).onclick = () => setOpen(false);
       });
 
       document.addEventListener('keydown', (event) => {
@@ -94,7 +94,7 @@ const currentPath = Astro.url.pathname;
       });
 
       document.addEventListener('click', (event) => {
-        if (mobileNav.classList.contains('is-open') && !mobileNav.contains(event.target)) {
+        if (mobileNav.classList.contains('is-open') && !mobileNav.contains(event.target as Node)) {
           setOpen(false);
         }
       });
